@@ -16,6 +16,6 @@ app.use(express.static("public"))
 app.use(cookirParser())
 
 import router from "./routes/user.routes.js"
-app.use("api/v1/route",router)
+app.use("/api/v1/route",router)
 
 export {app}
