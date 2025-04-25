@@ -128,8 +128,8 @@ const logoutUser = asyncHandler(async(req,res)=>{
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set:{
-                refreshToken:undefined
+            $unset:{
+                refreshToken:1
             },
         },
         {
@@ -137,7 +137,7 @@ const logoutUser = asyncHandler(async(req,res)=>{
         }
     )
     const options = {
-        htmlOnly:true,
+        httpOnly:true,
         secure:true
     }
 
@@ -212,7 +212,7 @@ const changeCurrentPassword=asyncHandler(async(req,res)=>{
 
 const getCurrentUser=asyncHandler(async(req,res)=>{
     return res
-    .staus(200)
+    .status(200)
     .json(new ApiResponse(200,req.user,"current user fetched successfully"))
 })
 
@@ -289,7 +289,7 @@ const updateUserCoverImage = asyncHandler(async(req,res)=>{
 
 const getUserChannelProfile = asyncHandler(async(req,res)=>{
     const {userName} = req.params
-    if(!userName?.trom()){
+    if(!userName?.trim()){
         throw new ApiError(400,"Username is missing")
     }
 
@@ -334,6 +334,7 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
         },
         {
             $project:{
+                fullName:1,
                 userName:1,
                 email:1,
                 subscribersCount:1,
@@ -350,7 +351,7 @@ const getUserChannelProfile = asyncHandler(async(req,res)=>{
     return res
     .status(200)
     .json(
-        new ApiResponse(200,"User channel fetched successfully")
+        new ApiResponse(200,channel[0], "User channel fetched successfully")
     )
 })
 

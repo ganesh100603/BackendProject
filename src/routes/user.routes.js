@@ -27,7 +27,7 @@ router.route("/change-password").post(verifyJWT,getCurrentUser)
 router.route("/current-user").post(verifyJWT,getCurrentUser)
 router.route("/update-user").patch(verifyJWT,updateUserDetails)
 router.route("/update-avatar").patch(verifyJWT,upload.single("avatar"),updateUserAvatar)
-router.route("/update-avatar").patch(verifyJWT,upload.single("coverImage"),updateUserCoverImage)
+router.route("/update-coverImage").patch(verifyJWT,upload.single("coverImage"),updateUserCoverImage)
 router.route("/c/:userName").get(verifyJWT,getUserChannelProfile)
 router.route("/history").get(verifyJWT,getWatchHistory)
 export default router
